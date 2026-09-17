@@ -1,0 +1,247 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,600&display=swap');
+@import "tailwindcss";
+
+:root {
+  --bg-cream: #eceae1;
+  --bg-subtle: #f3f5ee;
+  --bg-card: #ffffff;
+  --text-dark: #1c2623;
+  --text-muted: #576560;
+  --border-line: #dedcd6;
+  --accent-orange: #ea580c;
+  --accent-orange-light: #f97316;
+  --accent-amber: #f59e0b;
+  --dark-green: #141b18;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body,
+#app {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg-cream);
+  color: var(--text-dark);
+  letter-spacing: -0.015em;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+.font-serif-italic {
+  font-family: 'Instrument Serif', 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* Floating Pill Nav */
+.framer-pill-nav {
+  background: rgba(236, 234, 225, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(28, 38, 35, 0.08);
+}
+
+/* Ultime.bio Inspired Floating Blocks */
+.block-card {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.2s ease;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+.block-card:hover {
+  transform: translateY(-6px) scale(1.02) !important;
+  box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.12);
+  border-color: rgba(28, 38, 35, 0.25);
+  z-index: 20;
+}
+
+/* Ultime.bio Giant Gradient Footer */
+.ultime-footer-bg {
+  background: linear-gradient(180deg, #f3f5ee 0%, #fdba74 15%, #f97316 40%, #ea580c 75%, #c2410c 100%);
+}
+
+.giant-footer-text {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-style: italic;
+  font-size: clamp(86px, 28vw, 320px);
+  line-height: 0.82;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  color: #ffffff !important;
+  text-transform: uppercase;
+  user-select: none;
+  pointer-events: none;
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+/* 3D Card Aceternity (@aceternity/3d-card-demo) */
+.card-3d-wrap {
+  perspective: 1000px;
+}
+.card-3d-body {
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out, box-shadow 0.3s ease;
+}
+.card-3d-item-float {
+  transform: translateZ(60px);
+  transition: transform 0.2s ease-out;
+}
+.card-3d-item-img {
+  transform: translateZ(90px);
+  transition: transform 0.2s ease-out;
+}
+
+/* Wobble Card Aceternity (@aceternity/wobble-card-demo) */
+.wobble-card-container {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.3s ease;
+  will-change: transform;
+}
+.wobble-card-noise {
+  background-image: radial-gradient(rgba(249, 115, 22, 0.15) 1px, transparent 0);
+  background-size: 16px 16px;
+}
+
+/* MagicUI Globe Glow */
+.globe-glow {
+  background: radial-gradient(circle at 50% 50%, rgba(249, 115, 22, 0.22) 0%, rgba(234, 88, 12, 0.08) 45%, transparent 70%);
+}
+
+.service-chip.selected {
+  background-color: #1c2623;
+  color: #eceae1;
+  border-color: #1c2623;
+}
+
+/* ================= ULTRA-INTERACTIVE BUTTON & HOVER STYLES ================= */
+
+/* Primary Action Button (Shine Sheen, Magnetic Lift & Glow) */
+.btn-magnetic-primary {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease;
+  box-shadow: 0 4px 14px 0 rgba(28, 38, 35, 0.16);
+  cursor: pointer;
+}
+
+.btn-magnetic-primary::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 20%;
+  height: 200%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.28) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(25deg);
+  transition: transform 0.75s ease;
+  pointer-events: none;
+}
+
+.btn-magnetic-primary:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 12px 28px -4px rgba(28, 38, 35, 0.28), 0 0 16px -2px rgba(234, 88, 12, 0.25);
+}
+
+.btn-magnetic-primary:hover::after {
+  transform: translateX(800%) rotate(25deg);
+}
+
+.btn-magnetic-primary:active {
+  transform: translateY(1px) scale(0.97);
+  box-shadow: 0 2px 6px 0 rgba(28, 38, 35, 0.15);
+}
+
+/* Secondary Button (Outline & Soft Elevation) */
+.btn-magnetic-secondary {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-magnetic-secondary:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.1);
+  border-color: rgba(28, 38, 35, 0.4);
+}
+
+.btn-magnetic-secondary:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+/* Animated Arrow on Button Hover */
+.btn-arrow-upright svg,
+.btn-arrow-upright lucide-icon {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-arrow-upright:hover svg,
+.btn-arrow-upright:hover lucide-icon {
+  transform: translate(3px, -3px);
+}
+
+.btn-arrow-right svg,
+.btn-arrow-right lucide-icon {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-arrow-right:hover svg,
+.btn-arrow-right:hover lucide-icon {
+  transform: translateX(4px);
+}
+
+/* Social Media Interactive Bubble */
+.social-icon-bubble {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+
+.social-icon-bubble:hover {
+  transform: translateY(-3px) scale(1.18) rotate(5deg);
+  box-shadow: 0 8px 18px -2px rgba(0, 0, 0, 0.18);
+}
+
+.social-icon-bubble:active {
+  transform: scale(0.92);
+}
+
+/* Pill Nav Link Animation */
+.nav-link-pill {
+  position: relative;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.nav-link-pill::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  width: 0%;
+  height: 2px;
+  background-color: #ea580c;
+  border-radius: 2px;
+  transform: translateX(-50%);
+  transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-link-pill:hover::after {
+  width: 70%;
+}
+
+.nav-link-pill:hover {
+  color: #1c2623;
+  transform: translateY(-1px);
+}
+
