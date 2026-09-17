@@ -15,12 +15,36 @@ export interface SendMessageResult {
   data?: unknown
 }
 
+function escapeHtml(str: string): string {
+  if (!str) return ''
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
+}
+
 /**
  * Server Function TanStack Start : Exécutée 100% CÔTÉ SERVEUR (Node / Nitro).
  * Élimine totalement les restrictions CORS du navigateur et protège la clé API Resend.
  */
 export const sendContactMessageServerFn = createServerFn({ method: 'POST' })
-  .validator((data: ContactFormData) => data)
+  .validator((data: ContactFormData) => {
+    if (!data.email || typeof data.email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) {
+      throw new Error('Adresse email invalide.')
+    }
+    if (!data.firstName || typeof data.firstName !== 'string' || data.firstName.trim().length > 100) {
+      throw new Error('Prénom invalide.')
+    }
+    if (!data.lastName || typeof data.lastName !== 'string' || data.lastName.trim().length > 100) {
+      throw new Error('Nom invalide.')
+    }
+    if (!data.message || typeof data.message !== 'string' || data.message.trim().length > 5000) {
+      throw new Error('Message invalide ou trop long (max 5000 caractères).')
+    }
+    return data
+  })
   .handler(async ({ data }) => {
     const apiKey =
       process.env.VITE_RESEND_API_KEY ||
@@ -49,8 +73,16 @@ export const sendContactMessageServerFn = createServerFn({ method: 'POST' })
       minute: '2-digit',
     })
 
-    // Nettoyage du numéro de téléphone pour lien WhatsApp direct
-    const cleanPhone = data.phone.replace(/[^0-9+]/g, '')
+    // Sécurisation et désinfection XSS de tous les champs utilisateurs
+    const safeFirstName = escapeHtml(data.firstName.trim().slice(0, 100))
+    const safeLastName = escapeHtml(data.lastName.trim().slice(0, 100))
+    const safeEmail = escapeHtml(data.email.trim().slice(0, 150))
+    const safePhone = escapeHtml(data.phone.trim().slice(0, 50))
+    const safeSector = escapeHtml(data.sector.trim().slice(0, 100))
+    const safeMessage = escapeHtml(data.message.trim().slice(0, 5000))
+
+    // Nettoyage strict du numéro de téléphone pour lien WhatsApp direct
+    const cleanPhone = safePhone.replace(/[^0-9+]/g, '')
     const whatsappUrl = `https://wa.me/${cleanPhone.replace('+', '')}`
 
     // Version texte brut (fallback anti-spam & accessibilité)
@@ -60,21 +92,21 @@ Faso Info Art Technologie • M. KONVELBO Élisée
 ==================================================
 
 INFORMATIONS DU CLIENT :
-- Prénom : ${data.firstName}
-- Nom : ${data.lastName}
-- Email : ${data.email}
-- Téléphone / WhatsApp : ${data.phone}
-- Domaine d'activité : ${data.sector}
+- Prénom : ${safeFirstName}
+- Nom : ${safeLastName}
+- Email : ${safeEmail}
+- Téléphone / WhatsApp : ${safePhone}
+- Domaine d'activité : ${safeSector}
 
 DÉTAILS DU MESSAGE & PROJET :
-${data.message}
+${data.message.trim().slice(0, 5000)}
 
 ==================================================
 Transmis le : ${formattedDate}
-Répondre directement à : ${data.email}
+Répondre directement à : ${safeEmail}
     `.trim()
 
-    // Corps d'email HTML haute fidélité
+    // Corps d'email HTML haute fidélité sécurisé
     const htmlContent = `
       <!DOCTYPE html>
       <html>
@@ -111,34 +143,34 @@ Répondre directement à : ${data.email}
               <table class="table-info">
                 <tr>
                   <td class="label">Prénom & Nom :</td>
-                  <td class="value">${data.firstName} ${data.lastName}</td>
+                  <td class="value">${safeFirstName} ${safeLastName}</td>
                 </tr>
                 <tr>
                   <td class="label">Adresse Email :</td>
-                  <td class="value"><a href="mailto:${data.email}" style="color: #ea580c; text-decoration: none; font-weight: bold;">${data.email}</a></td>
+                  <td class="value"><a href="mailto:${safeEmail}" style="color: #ea580c; text-decoration: none; font-weight: bold;">${safeEmail}</a></td>
                 </tr>
                 <tr>
                   <td class="label">Téléphone / WhatsApp :</td>
-                  <td class="value"><a href="tel:${cleanPhone}" style="color: #1c2623; text-decoration: none;">${data.phone}</a></td>
+                  <td class="value"><a href="tel:${cleanPhone}" style="color: #1c2623; text-decoration: none;">${safePhone}</a></td>
                 </tr>
                 <tr>
                   <td class="label">Domaine d'activité :</td>
-                  <td class="value"><span class="badge">${data.sector}</span></td>
+                  <td class="value"><span class="badge">${safeSector}</span></td>
                 </tr>
               </table>
 
               <div class="message-box">
                 <div class="message-title">Message & Détails du Projet :</div>
-                <p class="message-text">${data.message}</p>
+                <p class="message-text">${safeMessage}</p>
               </div>
 
               <div style="margin-top: 24px;">
-                <a href="mailto:${data.email}?subject=Re:%20Votre%20demande%20FIAT%20-%20M.%20KONVELBO%20%C3%89lis%C3%A9e" style="display: inline-block; margin-right: 10px; padding: 10px 18px; border-radius: 20px; font-size: 12px; font-weight: bold; text-decoration: none; background: #1c2623; color: #ffffff;">
+                <a href="mailto:${safeEmail}?subject=Re:%20Votre%20demande%20FIAT%20-%20M.%20KONVELBO%20%C3%89lis%C3%A9e" style="display: inline-block; margin-right: 10px; padding: 10px 18px; border-radius: 20px; font-size: 12px; font-weight: bold; text-decoration: none; background: #1c2623; color: #ffffff;">
                   ✉️ Répondre au client
                 </a>
                 ${
                   cleanPhone
-                    ? `<a href="${whatsappUrl}" target="_blank" style="display: inline-block; padding: 10px 18px; border-radius: 20px; font-size: 12px; font-weight: bold; text-decoration: none; background: #25D366; color: #ffffff;">
+                    ? `<a href="${whatsappUrl}" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 10px 18px; border-radius: 20px; font-size: 12px; font-weight: bold; text-decoration: none; background: #25D366; color: #ffffff;">
                         💬 Ouvrir sur WhatsApp
                       </a>`
                     : ''

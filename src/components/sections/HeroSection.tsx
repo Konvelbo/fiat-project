@@ -80,7 +80,7 @@ export const HeroSection: React.FC = () => {
               <a
                 href="https://facebook.com"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 title="Facebook"
                 aria-label="Facebook"
                 className="social-icon-bubble w-9 h-9 rounded-full bg-white border border-[#dedcd6] flex items-center justify-center text-[#1877F2] hover:bg-[#1877F2] hover:text-white shadow-sm transition-transform hover:scale-105"
@@ -93,7 +93,7 @@ export const HeroSection: React.FC = () => {
               <a
                 href="https://linkedin.com"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 title="LinkedIn"
                 aria-label="LinkedIn"
                 className="social-icon-bubble w-9 h-9 rounded-full bg-white border border-[#dedcd6] flex items-center justify-center text-[#0A66C2] hover:bg-[#0A66C2] hover:text-white shadow-sm transition-transform hover:scale-105"
@@ -106,7 +106,7 @@ export const HeroSection: React.FC = () => {
               <a
                 href="https://x.com"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 title="Twitter / X"
                 aria-label="Twitter / X"
                 className="social-icon-bubble w-9 h-9 rounded-full bg-white border border-[#dedcd6] flex items-center justify-center text-black hover:bg-black hover:text-white shadow-sm transition-transform hover:scale-105"

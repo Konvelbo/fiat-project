@@ -61,7 +61,7 @@ export const Footer: React.FC = () => {
               <a
                 href="https://facebook.com"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 title="Facebook"
                 aria-label="Facebook"
                 className="social-icon-bubble w-8 h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-white hover:text-[#1877F2] shadow-sm"
@@ -75,7 +75,7 @@ export const Footer: React.FC = () => {
               <a
                 href="https://linkedin.com"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 title="LinkedIn"
                 aria-label="LinkedIn"
                 className="social-icon-bubble w-8 h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-white hover:text-[#0A66C2] shadow-sm"
@@ -89,7 +89,7 @@ export const Footer: React.FC = () => {
               <a
                 href="https://x.com"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 title="Twitter / X"
                 aria-label="Twitter / X"
                 className="social-icon-bubble w-8 h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-white hover:text-black shadow-sm"
