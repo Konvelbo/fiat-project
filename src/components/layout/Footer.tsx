@@ -100,8 +100,15 @@ export const Footer: React.FC = () => {
               </a>
             </div>
 
-            <div className="text-[11px] text-white/80">
-              Ouagadougou &bull; Contact direct M. KONVELBO Élisée &bull; 11 ans d'expérience
+            <div className="text-[11.5px] text-white/90 font-medium">
+              Ouagadougou &bull; Contact direct M. KONVELBO Élisée :{' '}
+              <a href="tel:+22678331306" className="font-bold underline hover:text-[#ffedd5] transition-colors">
+                (+226) 78331306
+              </a>
+              {' / '}
+              <a href="tel:+22647331306" className="font-bold underline hover:text-[#ffedd5] transition-colors">
+                47331306
+              </a>
             </div>
           </div>
         </motion.div>

@@ -38,11 +38,9 @@ export const MobileDrawerProvider: React.FC<{ children: React.ReactNode }> = ({ 
   const toggle = () => setIsOpen((prev) => !prev)
 
   const navLinks = [
-    { label: 'Démo', href: '/#hero' },
     { label: 'Qui sommes-nous', href: '/#about' },
     { label: 'Services & Projets', href: '/#services' },
     { label: 'FAQ', href: '/#faq' },
-    { label: 'Tarifs & Contact', href: '/contact' },
   ]
 
   const handleLinkClick = () => {
@@ -151,15 +149,6 @@ export const MobileDrawerProvider: React.FC<{ children: React.ReactNode }> = ({ 
               transition={{ duration: 0.25, delay: 0.05 }}
               className="absolute right-0 top-0 bottom-0 w-[52%] max-w-[260px] pr-4 sm:pr-8 flex flex-col items-center justify-center text-center space-y-4 z-20"
             >
-              {/* Top link: Se connecter */}
-              <Link
-                to="/contact"
-                onClick={handleLinkClick}
-                className="text-white font-bold text-[17px] tracking-tight hover:opacity-90 transition-opacity"
-              >
-                Se connecter
-              </Link>
-
               {/* White Pill Button: Prendre RDV */}
               <Link
                 to="/contact"
