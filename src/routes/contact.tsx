@@ -153,8 +153,7 @@ function ContactPage() {
                 </h3>
                 <p className="text-xs sm:text-sm text-[#4f605c] max-w-sm mx-auto leading-relaxed">
                   Merci pour votre confiance. <strong>M. KONVELBO Élisée</strong> et l'équipe technique
-                  de <strong>FIAT</strong> ont bien reçu votre demande et prendront contact avec vous
-                  sous 24 heures.
+                  de <strong>FIAT</strong> ont bien reçu votre demande. Un email d'accusé de réception et de remerciement vous a été envoyé par <strong>M. KONVELBO Élisée</strong>.
                 </p>
               </div>
               <div className="pt-3 flex flex-wrap items-center justify-center gap-3">

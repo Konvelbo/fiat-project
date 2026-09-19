@@ -292,6 +292,8 @@ Faso Info Art Technologie • Ouagadougou, Burkina Faso
           ...data,
           html: htmlContent,
           text: plainTextContent,
+          thankYouHtml,
+          thankYouPlainText,
           sentAt: new Date().toISOString(),
         }
 
@@ -318,7 +320,7 @@ Faso Info Art Technologie • Ouagadougou, Burkina Faso
       // Envoi de l'email automatique de remerciement au client (signé M. KONVELBO Élisée)
       if (isDirectResend && data.email) {
         try {
-          await fetch(targetUrl, {
+          const thankYouRes = await fetch(targetUrl, {
             method: 'POST',
             headers,
             body: JSON.stringify({
@@ -330,6 +332,12 @@ Faso Info Art Technologie • Ouagadougou, Burkina Faso
               reply_to: toEmail,
             }),
           })
+          if (!thankYouRes.ok) {
+            const errDetail = await thankYouRes.text().catch(() => '')
+            console.warn('[FIAT Resend] Notification client (note: en mode sandbox gratuit, Resend limite les envois externes sans domaine validé) :', errDetail)
+          } else {
+            console.info(`[FIAT Resend] Email de remerciement de M. KONVELBO Élisée transmis avec succès à ${data.email}`)
+          }
         } catch (thankYouErr) {
           console.warn('[FIAT Resend] Erreur non bloquante lors de l’envoi de l’accusé de réception au client :', thankYouErr)
         }
