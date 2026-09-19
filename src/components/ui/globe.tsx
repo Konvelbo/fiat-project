@@ -162,8 +162,12 @@ export function CobeGlobe({ className = "" }: CobeGlobeProps) {
         ctx.stroke();
       }
 
-      // 5. Authentic World Continent Dense Dotted Matrix (Natural Earth 6,700+ Geographic Points)
-      WORLD_GEO.dots.forEach(([lat, lng, isAccent]) => {
+      // 5. Authentic World Continent Dense Dotted Matrix (Natural Earth Geographic Points)
+      const isMobileScreen = width < 640;
+      WORLD_GEO.dots.forEach(([lat, lng, isAccent], idx) => {
+        // On mobile, sample 50% of dots to save massive CPU/GPU fillrate while preserving sharpness
+        if (isMobileScreen && idx % 2 !== 0) return;
+
         const pt = latLngTo3D(lat, lng, radius);
         if (pt.z > 0) {
           const depth = pt.z / radius;
@@ -207,7 +211,11 @@ export function CobeGlobe({ className = "" }: CobeGlobeProps) {
       });
     };
 
+    let isVisible = false;
+
     const render = () => {
+      if (!isVisible) return;
+
       if (!isDragging.current) {
         // Silky smooth momentum inertia when released
         if (Math.abs(velocityX.current) > 0.00005 || Math.abs(velocityY.current) > 0.00005) {
@@ -227,9 +235,26 @@ export function CobeGlobe({ className = "" }: CobeGlobeProps) {
       animId = requestAnimationFrame(render);
     };
 
-    render();
+    // IntersectionObserver: PAUSE rendering completely when off-screen to save 100% CPU/battery!
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+        if (isVisible) {
+          cancelAnimationFrame(animId);
+          animId = requestAnimationFrame(render);
+        } else {
+          cancelAnimationFrame(animId);
+        }
+      },
+      { threshold: 0.05 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
 
     return () => {
+      observer.disconnect();
       cancelAnimationFrame(animId);
     };
   }, []);

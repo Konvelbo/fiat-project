@@ -3,28 +3,24 @@ import { Link } from '@tanstack/react-router'
 import { motion } from 'motion/react'
 import { ArrowUpRight } from 'lucide-react'
 
-// Infinite Marquee Row Component for Mobile
+// Infinite GPU-Accelerated Marquee Row Component for Mobile (Zero JS overhead)
 const MobileMarqueeRow: React.FC<{
   children: React.ReactNode
   direction?: 'left' | 'right'
   duration?: number
-}> = ({ children, direction = 'left', duration = 35 }) => {
+}> = ({ children, direction = 'left' }) => {
   return (
     <div className="relative w-full overflow-hidden py-2 select-none">
-      <motion.div
-        animate={{
-          x: direction === 'left' ? ['0%', '-50%'] : ['-50%', '0%'],
-        }}
-        transition={{
-          duration,
-          ease: 'linear',
-          repeat: Infinity,
-        }}
-        className="flex gap-3.5 w-max shrink-0 items-stretch"
+      <div
+        className={
+          direction === 'left'
+            ? 'animate-marquee-left flex gap-3.5 items-stretch'
+            : 'animate-marquee-right flex gap-3.5 items-stretch'
+        }
       >
         {children}
         {children}
-      </motion.div>
+      </div>
     </div>
   )
 }
@@ -88,7 +84,7 @@ export const ServicesBlocksSection: React.FC = () => {
               <span className="text-white/40 text-[9px]">10Gbps</span>
             </div>
             <div className="h-20 rounded-xl overflow-hidden mb-2 bg-neutral-800">
-              <img src="/wifi-networking.jpg" alt="WiFi 6" className="w-full h-full object-cover" />
+              <img src="/wifi-networking.jpg" alt="WiFi 6" loading="lazy" decoding="async" className="w-full h-full object-cover" />
             </div>
             <div className="text-xs font-bold">Réseaux WiFi Haute Performance</div>
             <div className="text-[10px] text-[#bccad1]">Bureaux, usines & chantiers BTP</div>
@@ -97,7 +93,7 @@ export const ServicesBlocksSection: React.FC = () => {
           {/* Card 3: Vidéosurveillance IP & IA */}
           <div className="w-[270px] bg-white p-3 rounded-[22px] shadow-md border border-[#dedcd6] shrink-0 flex flex-col justify-between">
             <div className="h-20 rounded-xl overflow-hidden bg-neutral-100 mb-2">
-              <img src="/cctv-surveillance.jpg" alt="Vidéosurveillance" className="w-full h-full object-cover" />
+              <img src="/cctv-surveillance.jpg" alt="Vidéosurveillance" loading="lazy" decoding="async" className="w-full h-full object-cover" />
             </div>
             <div>
               <div className="flex items-center justify-between mb-0.5">
@@ -130,7 +126,7 @@ export const ServicesBlocksSection: React.FC = () => {
               <span className="text-[10px] font-bold">BFT / CAME</span>
             </div>
             <div className="h-20 rounded-xl overflow-hidden mb-2">
-              <img src="/smart-gate.jpg" alt="Portails Automatisés" className="w-full h-full object-cover" />
+              <img src="/smart-gate.jpg" alt="Portails Automatisés" loading="lazy" decoding="async" className="w-full h-full object-cover" />
             </div>
             <h4 className="font-bold text-xs">Portails & Portes Automatisés</h4>
             <p className="text-[10px] text-white/80">Motorisation et contrôle d'accès.</p>
@@ -149,7 +145,7 @@ export const ServicesBlocksSection: React.FC = () => {
           {/* Card 7: Matériel Informatique */}
           <div className="w-[270px] bg-white p-3 rounded-[22px] shadow-md border border-[#dedcd6] shrink-0 flex flex-col justify-between">
             <div className="h-20 rounded-xl overflow-hidden bg-neutral-100 mb-2">
-              <img src="/it-hardware.jpg" alt="Matériel Informatique" className="w-full h-full object-cover" />
+              <img src="/it-hardware.jpg" alt="Matériel Informatique" loading="lazy" decoding="async" className="w-full h-full object-cover" />
             </div>
             <div>
               <div className="flex items-center justify-between mb-0.5">

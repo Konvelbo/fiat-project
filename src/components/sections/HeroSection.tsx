@@ -143,6 +143,8 @@ export const HeroSection: React.FC = () => {
             <img
               src="/Photo-pdg-fiat.png"
               alt="M. KONVELBO Élisée - Fondateur FIAT"
+              decoding="async"
+              fetchPriority="high"
               className="w-full h-auto max-h-[86vh] xl:max-h-[92vh] object-contain object-bottom drop-shadow-2xl scale-110 xl:scale-120 origin-bottom"
             />
 
