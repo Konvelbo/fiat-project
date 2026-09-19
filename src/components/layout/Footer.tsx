@@ -33,23 +33,39 @@ export const Footer: React.FC = () => {
           {/* Right Links, Tagline & Social Icons */}
           <div className="text-left md:text-right space-y-3">
             <p className="text-xs sm:text-sm text-white font-medium max-w-md md:ml-auto leading-relaxed drop-shadow-sm">
-              Fait pour le Burkina Faso et la sous-région, avec rigueur, intégrité et passion technologique.
+              Fait pour le Burkina Faso et la sous-région, avec rigueur,
+              intégrité et passion technologique.
             </p>
 
             <div className="flex flex-wrap md:justify-end gap-x-5 gap-y-2 text-xs font-semibold text-white">
-              <a href="/#hero" className="hover:text-[#ffedd5] hover:-translate-y-0.5 transition-all">
+              <a
+                href="/#hero"
+                className="hover:text-[#ffedd5] hover:-translate-y-0.5 transition-all"
+              >
                 Salu
               </a>
-              <a href="/#about" className="hover:text-[#ffedd5] hover:-translate-y-0.5 transition-all">
+              <a
+                href="/#about"
+                className="hover:text-[#ffedd5] hover:-translate-y-0.5 transition-all"
+              >
                 Qui somme nous
               </a>
-              <a href="/#services" className="hover:text-[#ffedd5] hover:-translate-y-0.5 transition-all">
+              <a
+                href="/#services"
+                className="hover:text-[#ffedd5] hover:-translate-y-0.5 transition-all"
+              >
                 Services & Projets
               </a>
-              <a href="/#faq" className="hover:text-[#ffedd5] hover:-translate-y-0.5 transition-all">
+              <a
+                href="/#faq"
+                className="hover:text-[#ffedd5] hover:-translate-y-0.5 transition-all"
+              >
                 FAQ
               </a>
-              <Link to="/contact" className="btn-arrow-right hover:text-white text-[#ffedd5] font-bold flex items-center gap-1.5 transition-all hover:-translate-y-0.5">
+              <Link
+                to="/contact"
+                className="btn-arrow-right hover:text-white text-[#ffedd5] font-bold flex items-center gap-1.5 transition-all hover:-translate-y-0.5"
+              >
                 <span>Créer mon projet</span>
                 <ArrowRight className="w-3.5 h-3.5 inline" />
               </Link>
@@ -102,11 +118,17 @@ export const Footer: React.FC = () => {
 
             <div className="text-[11.5px] text-white/90 font-medium">
               Ouagadougou &bull; Contact direct M. KONVELBO Élisée :{' '}
-              <a href="tel:+22678331306" className="font-bold underline hover:text-[#ffedd5] transition-colors">
+              <a
+                href="tel:+22678331306"
+                className="font-bold underline hover:text-[#ffedd5] transition-colors"
+              >
                 (+226) 78331306
               </a>
               {' / '}
-              <a href="tel:+22647331306" className="font-bold underline hover:text-[#ffedd5] transition-colors">
+              <a
+                href="tel:+22647331306"
+                className="font-bold underline hover:text-[#ffedd5] transition-colors"
+              >
                 74331306
               </a>
             </div>
@@ -118,8 +140,16 @@ export const Footer: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, y: 35, scale: 0.96 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: false, amount: 'some', margin: '80px 0px 0px 0px' }}
-            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1], delay: 0.08 }}
+            viewport={{
+              once: false,
+              amount: 'some',
+              margin: '80px 0px 0px 0px',
+            }}
+            transition={{
+              duration: 0.65,
+              ease: [0.16, 1, 0.3, 1],
+              delay: 0.08,
+            }}
             className="giant-footer-text text-white"
           >
             FIAT
@@ -134,8 +164,10 @@ export const Footer: React.FC = () => {
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.12 }}
           className="mt-4 pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-[11px] text-white/80 gap-2"
         >
-          <div>© 2015-2026 Faso Info Art Technologie (FIAT). Tous droits réservés.</div>
-          <div>Fondateur : Mr. KONVELBO Élisée</div>
+          <div>
+            © 2015-2026 Faso Info Art Technologie (FIAT). Tous droits réservés.
+          </div>
+          <div>Fondateur : M. KONVELBO Élisée</div>
         </motion.div>
       </div>
     </footer>
