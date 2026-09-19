@@ -6,14 +6,32 @@ import { CardContainer, CardBody, CardItem } from '../ui/card-3d'
 import { Counter } from '../ui/counter'
 
 export const AboutSection: React.FC = () => {
+  const [isMobile, setIsMobile] = React.useState(false)
+
+  React.useEffect(() => {
+    const updateSize = () => setIsMobile(window.innerWidth < 768)
+    updateSize()
+    window.addEventListener('resize', updateSize)
+    return () => window.removeEventListener('resize', updateSize)
+  }, [])
+
   return (
     <section id="about" className="py-24 px-4 bg-[#f3f5ee] border-y border-[#dedcd6]">
       <div className="max-w-[1200px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-14 items-center">
-          {/* Left Col : Aceternity 3D Card (Enlarged & Wider) */}
-          <div className="md:col-span-6 lg:col-span-5 flex justify-center">
-            <CardContainer className="inter-var w-full">
-              <CardBody className="bg-[#141b18] relative group/card border-white/10 w-full max-w-[440px] lg:max-w-[460px] h-auto rounded-[32px] p-7 sm:p-8 border shadow-2xl hover:shadow-orange-500/10 transition-shadow">
+          {/* Left Col : Aceternity 3D Card (Pure fade on mobile, depth entrance on desktop) */}
+          <motion.div
+            initial={isMobile ? { opacity: 0 } : { opacity: 0, x: -30, scale: 0.96 }}
+            whileInView={isMobile ? { opacity: 1 } : { opacity: 1, x: 0, scale: 1 }}
+            viewport={{ once: isMobile, amount: 0.15 }}
+            transition={{ duration: isMobile ? 0.75 : 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="md:col-span-6 lg:col-span-5 flex items-center justify-center w-full mx-auto"
+          >
+            <CardContainer
+              containerClassName="w-full flex items-center justify-center py-2"
+              className="inter-var w-full max-w-[340px] sm:max-w-[420px] lg:max-w-[460px] mx-auto flex items-center justify-center"
+            >
+              <CardBody className="bg-[#141b18] relative group/card border-white/10 w-full max-w-[340px] sm:max-w-[420px] lg:max-w-[460px] mx-auto h-auto rounded-[28px] sm:rounded-[32px] p-5 sm:p-7 xl:p-8 border shadow-2xl hover:shadow-orange-500/10 transition-shadow">
                 {/* Card Header (translateZ: 50) */}
                 <CardItem translateZ={50} className="w-full">
                   <div className="text-[10px] font-bold uppercase tracking-widest text-[#f97316]">
@@ -45,13 +63,13 @@ export const AboutSection: React.FC = () => {
                 </CardItem>
               </CardBody>
             </CardContainer>
-          </div>
+          </motion.div>
 
           {/* Right Col : Company Story & Animated Counters */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
+            initial={isMobile ? { opacity: 0 } : { opacity: 0, x: 20 }}
+            whileInView={isMobile ? { opacity: 1 } : { opacity: 1, x: 0 }}
+            viewport={{ once: isMobile, amount: 0.15 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="md:col-span-6 lg:col-span-7 space-y-6"
           >

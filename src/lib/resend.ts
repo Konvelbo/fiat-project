@@ -187,6 +187,87 @@ Répondre directement à : ${safeEmail}
       </html>
     `
 
+    // Email de remerciement et d'accusé de réception automatique au client (au nom de M. KONVELBO Élisée)
+    const thankYouHtml = `
+      <!DOCTYPE html>
+      <html lang="fr">
+        <head>
+          <meta charset="utf-8">
+          <style>
+            body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #fbf9f1; margin: 0; padding: 24px; color: #1c2623; }
+            .container { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 16px; overflow: hidden; border: 1px solid #dedcd6; box-shadow: 0 4px 14px rgba(0,0,0,0.06); }
+            .header { background: #1c2623; padding: 32px 24px; text-align: center; }
+            .header h1 { margin: 0; font-size: 24px; color: #ffffff; letter-spacing: -0.02em; font-weight: 800; }
+            .header p { margin: 6px 0 0 0; font-size: 13px; color: #ea580c; font-weight: 600; }
+            .content { padding: 32px 28px; color: #2d3748; line-height: 1.7; font-size: 15px; }
+            .greeting { font-size: 17px; font-weight: 700; color: #1c2623; margin-bottom: 16px; }
+            .highlight-box { background: #fbf9f1; border-left: 4px solid #ea580c; border-radius: 0 10px 10px 0; padding: 16px 20px; margin: 20px 0; font-size: 14px; color: #4a5568; }
+            .signature { margin-top: 32px; padding-top: 24px; border-top: 1px solid #dedcd6; }
+            .signature-name { font-size: 16px; font-weight: 800; color: #1c2623; }
+            .signature-title { font-size: 13px; color: #ea580c; font-weight: 600; margin-top: 2px; }
+            .signature-company { font-size: 13px; color: #576560; margin-top: 2px; }
+            .signature-contact { font-size: 13px; color: #1c2623; margin-top: 10px; font-weight: 600; }
+            .footer { background: #f3f5ee; padding: 18px 24px; text-align: center; font-size: 11px; color: #576560; border-top: 1px solid #dedcd6; }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <div class="header">
+              <h1>FIAT ™</h1>
+              <p>Faso Info Art Technologie • M. KONVELBO Élisée</p>
+            </div>
+            <div class="content">
+              <div class="greeting">Bonjour ${safeFirstName} ${safeLastName},</div>
+              <p>
+                Je vous remercie chaleureusement d'avoir contacté <strong>FIAT (Faso Info Art Technologie)</strong> au sujet de votre projet dans le secteur : <strong>${safeSector}</strong>.
+              </p>
+              <p>
+                Votre demande a été bien enregistrée. Notre équipe technique et moi-même étudions vos besoins avec la plus grande rigueur et reviendrons vers vous sous <strong>24 à 48 heures ouvrées</strong> avec une proposition technique détaillée et un devis adapté.
+              </p>
+              <div class="highlight-box">
+                <strong>Rappel de votre message :</strong><br>
+                « ${safeMessage} »
+              </div>
+              <p>
+                Pour toute urgence ou précision immédiate, vous pouvez nous joindre directement par appel ou WhatsApp.
+              </p>
+              <div class="signature">
+                <div class="signature-name">M. KONVELBO Élisée</div>
+                <div class="signature-title">Fondateur & Directeur Général — FIAT</div>
+                <div class="signature-company">Faso Info Art Technologie • Ouagadougou, Burkina Faso</div>
+                <div class="signature-contact">
+                  📞 Téléphone : (+226) 78 33 13 06 / 47 33 13 06<br>
+                  🌐 Site web : fiat.bf
+                </div>
+              </div>
+            </div>
+            <div class="footer">
+              © 2015-2026 Faso Info Art Technologie (FIAT) — Tous droits réservés.
+            </div>
+          </div>
+        </body>
+      </html>
+    `
+
+    const thankYouPlainText = `
+Bonjour ${safeFirstName} ${safeLastName},
+
+Je vous remercie chaleureusement d'avoir contacté FIAT (Faso Info Art Technologie) au sujet de votre projet : ${safeSector}.
+
+Votre demande a été bien enregistrée. Notre équipe technique et moi-même étudions vos besoins avec la plus grande rigueur et reviendrons vers vous sous 24 à 48 heures ouvrées avec une proposition sur mesure.
+
+Rappel de votre message :
+« ${safeMessage} »
+
+Pour toute urgence, joignez-nous directement :
+Téléphone : (+226) 78 33 13 06 / 47 33 13 06
+
+Bien cordialement,
+M. KONVELBO Élisée
+Fondateur & Directeur Général — FIAT
+Faso Info Art Technologie • Ouagadougou, Burkina Faso
+    `.trim()
+
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
     }
@@ -232,6 +313,26 @@ Répondre directement à : ${safeEmail}
 
         const errorText = await response.text().catch(() => 'Erreur inconnue')
         throw new Error(`Erreur API Resend (${response.status}): ${errorText}`)
+      }
+
+      // Envoi de l'email automatique de remerciement au client (signé M. KONVELBO Élisée)
+      if (isDirectResend && data.email) {
+        try {
+          await fetch(targetUrl, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify({
+              from: fromEmail,
+              to: [data.email],
+              subject: `Merci pour votre message - FIAT (M. KONVELBO Élisée)`,
+              html: thankYouHtml,
+              text: thankYouPlainText,
+              reply_to: toEmail,
+            }),
+          })
+        } catch (thankYouErr) {
+          console.warn('[FIAT Resend] Erreur non bloquante lors de l’envoi de l’accusé de réception au client :', thankYouErr)
+        }
       }
 
       const responseData = await response.json().catch(() => ({ success: true }))

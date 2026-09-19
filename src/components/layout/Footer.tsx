@@ -107,7 +107,7 @@ export const Footer: React.FC = () => {
               </a>
               {' / '}
               <a href="tel:+22647331306" className="font-bold underline hover:text-[#ffedd5] transition-colors">
-                47331306
+                74331306
               </a>
             </div>
           </div>
@@ -135,7 +135,7 @@ export const Footer: React.FC = () => {
           className="mt-4 pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-[11px] text-white/80 gap-2"
         >
           <div>© 2015-2026 Faso Info Art Technologie (FIAT). Tous droits réservés.</div>
-          <div>Fondateur : M. KONVELBO Élisée</div>
+          <div>Fondateur : Mr. KONVELBO Élisée</div>
         </motion.div>
       </div>
     </footer>
